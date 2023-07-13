@@ -16,5 +16,42 @@
     "express": "^4.18.2",
     "typescript": "^5.1.6",
     "winston": "^3.10.0"
-  }
+  },
+  "types": "./source/index.d.ts",
+  "keywords": [
+    "error handler",
+    "error handling middleware",
+    "express",
+    "middleware",
+    "validation",
+    "error handling",
+    "async",
+    "typescript",
+    "request",
+    "response",
+    "utility",
+    "utilities",
+    "validation middleware",
+    "express middleware",
+    "async error handling",
+    "request validation",
+    "response handling",
+    "error management",
+    "error wrapper",
+    "catch errors",
+    "express errors",
+    "request errors",
+    "response errors",
+    "request validation middleware",
+    "response error handling",
+    "express error handler"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nextyfine-dev/catch-express-errors.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nextyfine-dev/catch-express-errors/issues"
+  },
+  "homepage": "https://github.com/nextyfine-dev/catch-express-errors#readme"
 }
