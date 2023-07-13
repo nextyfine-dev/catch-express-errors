@@ -1,11 +1,10 @@
 {
-  "name": "catch-express-errors",
-  "version": "0.1.0",
+  "name": "catch-express-error",
+  "version": "0.1.1",
   "description": "It is a Node.js package for handling and catching errors in Express.js applications.",
   "main": "source/index.js",
   "author": "nextyfine-dev",
   "license": "MIT",
-  "private": true,
   "type": "module",
   "scripts": {
     "build": "npx tsc"

@@ -7,7 +7,7 @@ Catch Express Errors is a lightweight package that provides error handling and a
 Install the package using npm:
 
 ```shell
-npm install catch-express-errors
+npm install catch-express-error
 ```
 
 ## Features
@@ -28,7 +28,7 @@ In your `app.ts` or `app.js` file:
 
 ```typescript
 import express from "express";
-import { handleGlobalErrors, AppError } from "catch-express-errors";
+import { handleGlobalErrors, AppError } from "catch-express-error";
 
 const app = express();
 
@@ -60,7 +60,7 @@ app.use(handleGlobalErrors(logger));
 Wrap your async route handler functions using the `catchAsync` function to catch any errors and pass them to the global error handler:
 
 ```javascript
-const catchAsync = require("catch-express-errors/catchAsync");
+const catchAsync = require("catch-express-error/catchAsync");
 
 app.get(
   "/users",
@@ -73,7 +73,7 @@ app.get(
 Or
 
 ```typescript
-import { catchAsync, AppError } from "catch-express-errors";
+import { catchAsync, AppError } from "catch-express-error";
 
 const signUp = catchAsync(async (req, res, next) => {
   // Your async code here
@@ -88,7 +88,7 @@ const signUp = catchAsync(async (req, res, next) => {
 Use the `AppError` class to create custom errors with consistent properties:
 
 ```javascript
-const { AppError } = require("catch-express-errors");
+const { AppError } = require("catch-express-error");
 
 const getUserData = async () => {
   if (!data) throw new AppError("User not found!", 404);
@@ -98,12 +98,11 @@ const getUserData = async () => {
 or
 
 ```typescript
-import { AppError } from "catch-express-errors";
+import { AppError } from "catch-express-error";
 
 // Example usage
 return next(new AppError("Please login again", 401));
 ```
-
 
 ## License
 
