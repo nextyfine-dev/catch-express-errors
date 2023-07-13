@@ -6,8 +6,8 @@
     "strict": true,
     "declaration": true,
     "sourceMap": true,
-    "outDir": "source",
-    "declarationDir": "types",
+    "outDir": "source/esm",
+    "declarationDir": "source",
     "rootDir": "src",
     "removeComments": true,
     "importHelpers": true,
@@ -16,7 +16,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
   "include": ["src"],
   "exclude": ["node_modules"]

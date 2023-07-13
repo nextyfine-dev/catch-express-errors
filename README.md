@@ -60,7 +60,7 @@ app.use(handleGlobalErrors(logger));
 Wrap your async route handler functions using the `catchAsync` function to catch any errors and pass them to the global error handler:
 
 ```javascript
-const catchAsync = require("catch-express-error/catchAsync");
+const { catchAsync } = require("catch-express-error/catchAsync");
 
 app.get(
   "/users",
