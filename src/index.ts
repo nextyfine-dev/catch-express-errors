@@ -1,3 +1,3 @@
-export { default as catchAsync } from "./catchAsync";
-export { default as AppError } from "./AppError";
-export { default as handleGlobalErrors } from "./errorController";
+export { default as catchAsync } from "./catchAsync.js";
+export { default as AppError } from "./AppError.js";
+export { default as handleGlobalErrors } from "./errorController.js";

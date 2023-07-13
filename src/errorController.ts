@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { Logger } from "winston";
 import { NewAppError } from "./types";
-import AppError from "./AppError";
+import AppError from "./AppError.js";
 
 const showErrMsg = (err: NewAppError, logger?: Logger) => {
   const errMsg = `💥 ${err.stack || err}`;
