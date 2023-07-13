@@ -1,14 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { Logger } from "winston";
-import { NewAppError } from "./types";
-import AppError from "./AppError.js";
+import AppError, { Err } from "./AppError.js";
 
-const showErrMsg = (err: NewAppError, logger?: Logger) => {
+const showErrMsg = (err: Err, logger?: Logger) => {
   const errMsg = `💥 ${err.stack || err}`;
   logger ? logger.error(errMsg) : console.error(errMsg);
 };
 
-const sendErrorDev = (err: NewAppError, res: Response, logger?: Logger) => {
+const sendErrorDev = (err: Err, res: Response, logger?: Logger) => {
   showErrMsg(err, logger);
   return res.status(err.statusCode).json({
     error: err,
@@ -17,7 +16,7 @@ const sendErrorDev = (err: NewAppError, res: Response, logger?: Logger) => {
 };
 
 const sendErrorProd = (
-  err: NewAppError,
+  err: Err,
   req: Request,
   res: Response,
   logger?: Logger
@@ -54,13 +53,13 @@ const sendErrorProd = (
   });
 };
 
-const handleCastErrorDB = (err: NewAppError) => {
+const handleCastErrorDB = (err: Err) => {
   const message = `Invalid ${err.path}: ${err.value}.`;
   return new AppError(message, 400);
 };
 
 const handleGlobalErrors = (logger?: Logger) => {
-  return (err: NewAppError, req: Request, res: Response, _: NextFunction) => {
+  return (err: Err, req: Request, res: Response, _: NextFunction) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || "error";
     if (process.env.NODE_ENV === "production") {

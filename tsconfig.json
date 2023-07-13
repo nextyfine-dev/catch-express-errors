@@ -6,8 +6,9 @@
     "strict": true,
     "declaration": true,
     "sourceMap": true,
-    "outDir": "./source",
-    "rootDir": "./src",
+    "outDir": "source",
+    "declarationDir": "types",
+    "rootDir": "src",
     "removeComments": true,
     "importHelpers": true,
     "importsNotUsedAsValues": "remove",
@@ -15,8 +16,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "rootDirs": ["src"]
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]

@@ -1,6 +1,6 @@
 {
   "name": "catch-express-error",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "It is a Node.js package for handling and catching errors in Express.js applications.",
   "main": "dist/index.cjs",
   "author": "nextyfine-dev",
@@ -27,7 +27,11 @@
     "typescript": "^5.1.6",
     "winston": "^3.10.0"
   },
-  "types": "./source/index.d.ts",
+  "files": [
+    "dist",
+    "source",
+    "types"
+  ],
   "keywords": [
     "error handler",
     "error handling middleware",
