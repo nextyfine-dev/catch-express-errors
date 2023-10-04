@@ -1,6 +1,6 @@
 {
   "name": "catch-express-error",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "It is a Node.js package for handling and catching errors in Express.js applications.",
   "main": "source/cjs/index.cjs",
   "module": "source/esm/index.mjs",
