@@ -48,26 +48,37 @@ export const catchAsync = (fn: Function) => {
   };
 };
 
-const showErrMsg = (err: Err, logger?: Logger) => {
-  const errMsg = `💥 ${err.stack || err}`;
+const showErrMsg = (err: Err, logger?: Logger | null) => {
+  const errMsg = `💥 ${
+    err.stack || (typeof err === "string" ? err : JSON.stringify(err))
+  }`;
   logger ? logger.error(errMsg) : console.error(errMsg);
 };
 
-const sendErrorDev = (err: Err, res: Response, logger?: Logger) => {
-  showErrMsg(err, logger);
-  return res.status(err.statusCode).json({
-    error: err,
-    stack: err.stack,
-  });
+const handleCastErrorDB = (err: Err) => {
+  const message = `Invalid ${err.path}: ${err.value}.`;
+  return new AppError(message, 400);
 };
 
-const sendErrorProd = (
-  err: Err,
-  req: Request,
-  res: Response,
-  logger?: Logger
+export const handleGlobalErrors = (
+  logger?: Logger | null,
+  isProduction = false
 ) => {
-  if (req.originalUrl.startsWith("/api")) {
+  return (err: Err, req: Request, res: Response, _: NextFunction) => {
+    err.statusCode = err.statusCode || 500;
+    err.status = err.status || "error";
+    showErrMsg(err, logger);
+
+    if (!isProduction)
+      return res.status(err.statusCode).json({
+        error: err,
+        stack: err.stack,
+      });
+
+    let error = { ...err };
+    error.message = err.message;
+    if (error.name === "CastError") error = handleCastErrorDB(error);
+
     if (err.isOperational) {
       return res.status(err.statusCode).json({
         status: err.status,
@@ -76,45 +87,10 @@ const sendErrorProd = (
       });
     }
 
-    showErrMsg(err, logger);
     return res.status(500).json({
       status: "error",
       message: "Something went very wrong!",
       statusCode: 500,
     });
-  }
-  if (err.isOperational) {
-    return res.status(err.statusCode).render("error", {
-      title: "Something went wrong!",
-      msg: err.message,
-      statusCode: err.statusCode,
-    });
-  }
-
-  showErrMsg(err, logger);
-  return res.status(err.statusCode).render("error", {
-    title: "Something went wrong!",
-    msg: "Please try again later.",
-    statusCode: err.statusCode,
-  });
-};
-
-const handleCastErrorDB = (err: Err) => {
-  const message = `Invalid ${err.path}: ${err.value}.`;
-  return new AppError(message, 400);
-};
-
-export const handleGlobalErrors = (logger?: Logger) => {
-  return (err: Err, req: Request, res: Response, _: NextFunction) => {
-    err.statusCode = err.statusCode || 500;
-    err.status = err.status || "error";
-    if (process.env.NODE_ENV === "production") {
-      let error = { ...err };
-      error.message = err.message;
-      if (error.name === "CastError") error = handleCastErrorDB(error);
-      sendErrorProd(error, req, res, logger);
-    } else {
-      sendErrorDev(err, res, logger);
-    }
   };
 };

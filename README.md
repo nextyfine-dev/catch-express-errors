@@ -20,8 +20,40 @@ npm install catch-express-error
 ✅ Easily integrate with existing Express applications  
 ✅ Lightweight and minimalistic
 
-## Usage
+## Usage:
 
+### AppError
+
+**Description:** 
+`AppError` is a custom error class designed to represent application-specific errors. It extends the built-in `Error` class and allows you to create instances of errors with customized properties.
+
+**Parameters:**
+1. `message` (string): A descriptive message explaining the error.
+2. `statusCode` (number, optional): The HTTP status code associated with the error. Defaults to 400 (Bad Request) if not provided.
+3. `details` (any, optional): Additional details or data related to the error.
+4. `name` (string, optional): A custom name for the error. Defaults to "App Error" if not provided.
+5. `code` (string | number, optional): A custom error code or identifier.
+   
+### catchAsync
+
+**Description:** 
+`catchAsync` is a higher-order function that wraps an asynchronous function to catch any errors it may throw and pass them to Express.js's error handling middleware.
+
+**Parameters:**
+1. `fn` (Function): The asynchronous function to be wrapped. It should accept `(req, res, next)` parameters.
+
+### handleGlobalErrors
+
+**Description:** 
+`handleGlobalErrors` is an Express.js error handling middleware that centralizes error handling for your application. It handles different types of errors and provides appropriate responses, including logging.
+
+**Parameters:**
+1. `logger` (Logger | null, optional): An optional Winston logger instance for logging errors. If not provided or set to `null`, errors will be logged to the console.
+2. `isProduction` (boolean, optional): A flag indicating whether the application is in production mode. Defaults to `false` if not provided.
+
+**Please note that `AppError` is a class, and `catchAsync` and `handleGlobalErrors` are functions that can be used as middleware in your Express.js application to handle errors in a standardized way.**
+
+## Examples:
 ### Global Error Handler
 
 In your `app.ts` or `app.js` file:
@@ -36,7 +68,7 @@ const app = express();
 
 // ... Your Express routes and middleware
 
-app.use(handleGlobalErrors());
+app.use(handleGlobalErrors()); 
 
 // ...
 ```
@@ -44,15 +76,43 @@ app.use(handleGlobalErrors());
 You can also use a logger with the global error handler:
 
 ```typescript
+import { handleGlobalErrors} from "catch-express-error";
+
 import { createLogger } from "winston";
 
 const logger = createLogger({
   // configure your logger
 });
 
+const app = express();
+
 // ... Your Express routes and middleware
 
 app.use(handleGlobalErrors(logger));
+```
+
+Production and Development mode with and without logger.:
+
+```typescript
+import { handleGlobalErrors} from "catch-express-error";
+import { createLogger } from "winston";
+
+const logger = createLogger({
+  // configure your logger
+});
+
+const app = express();
+
+// ... Your Express routes and middleware
+
+app.use(handleGlobalErrors()); // Without 'logger' and 'development' mode
+
+app.use(handleGlobalErrors(logger)); // With 'logger' and 'development' mode.
+
+app.use(handleGlobalErrors(null, true)); // Without 'logger' and 'production' mode.
+
+app.use(handleGlobalErrors(logger, true)); // With 'logger' and 'production' mode.
+
 ```
 
 ### Catch Async Function Errors
@@ -60,7 +120,7 @@ app.use(handleGlobalErrors(logger));
 Wrap your async route handler functions using the `catchAsync` function to catch any errors and pass them to the global error handler:
 
 ```javascript
-const { catchAsync } = require("catch-express-error/catchAsync");
+const { catchAsync } = require("catch-express-error");
 
 app.get(
   "/users",
