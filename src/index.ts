@@ -64,7 +64,7 @@ export const handleGlobalErrors = (
   logger?: Logger | null,
   isProduction = false
 ) => {
-  return (err: Err, req: Request, res: Response, _: NextFunction) => {
+  return (err: Err, __: Request, res: Response, _: NextFunction) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || "error";
     showErrMsg(err, logger);

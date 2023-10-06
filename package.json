@@ -1,6 +1,6 @@
 {
   "name": "catch-express-error",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "It is a Node.js package for handling and catching errors in Express.js applications.",
   "main": "source/cjs/index.cjs",
   "module": "source/esm/index.mjs",
@@ -14,9 +14,9 @@
   },
   "types": "./source/index.d.ts",
   "scripts": {
-    "build": "yarn run build:cjs && yarn run build:esm",
-    "build:cjs": "npx tsc -p tsconfig.cjs.json && mv source/cjs/index.js source/cjs/index.cjs",
-    "build:esm": "npx tsc -p tsconfig.json && mv source/esm/index.js source/esm/index.mjs"
+    "build": "bun run build:cjs && bun run build:esm",
+    "build:cjs": "bun x tsc -p tsconfig.cjs.json && mv source/cjs/index.js source/cjs/index.cjs",
+    "build:esm": "bun x tsc -p tsconfig.json && mv source/esm/index.js source/esm/index.mjs"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
