@@ -31,10 +31,10 @@ export class AppError implements Err {
     code?: string | number
   ) {
     this.message = message;
-    this.statusCode = statusCode || 400;
+    this.statusCode = statusCode ?? 400;
     this.status = `${statusCode}`.startsWith("4") ? "fail" : "error";
     this.isOperational = true;
-    this.name = name || "App Error";
+    this.name = name ?? "App Error";
     this.code = code;
     this.details = details;
 
@@ -50,14 +50,9 @@ export const catchAsync = (fn: Function) => {
 
 const showErrMsg = (err: Err, logger?: Logger | null) => {
   const errMsg = `💥 ${
-    err.stack || (typeof err === "string" ? err : JSON.stringify(err))
+    err.stack ?? (typeof err === "string" ? err : JSON.stringify(err))
   }`;
-  logger ? logger.error(errMsg) : console.error(errMsg);
-};
-
-const handleCastErrorDB = (err: Err) => {
-  const message = `Invalid ${err.path}: ${err.value}.`;
-  return new AppError(message, 400);
+  logger ? logger.log("error", err) : console.error(errMsg);
 };
 
 export const handleGlobalErrors = (
@@ -74,10 +69,6 @@ export const handleGlobalErrors = (
         error: err,
         stack: err.stack,
       });
-
-    let error = { ...err };
-    error.message = err.message;
-    if (error.name === "CastError") error = handleCastErrorDB(error);
 
     if (err.isOperational) {
       return res.status(err.statusCode).json({

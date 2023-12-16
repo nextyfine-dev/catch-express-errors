@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "strict": true,
     "declaration": true,
     "sourceMap": false,
-    "outDir": "source/esm",
-    "declarationDir": "source",
-    "rootDir": "src",
+    "outDir": "./source",
+    "declarationDir": "./source",
+    "rootDir": "./src",
     "removeComments": true,
     "importHelpers": true,
     "importsNotUsedAsValues": "remove",
@@ -16,7 +16,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
